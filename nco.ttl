@@ -1,363 +1,340 @@
 @prefix : <http://www.estg.ipvc.pt/mbentoalves/nco.ttl#> .
+@prefix nco: <http://www.estg.ipvc.pt/mbentoalves/nco.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix time: <http://www.w3.org/2006/time#> .
-@base <http://www.estg.ipvc.pt/mbentoalves/nco.ttl#> .
+@prefix tzont: <http://www.w3.org/2006/timezone#> .
+@prefix icaltzd: <http://www.w3.org/2002/12/cal/icaltzd#> .
+@prefix time-entry: <http://ontology.ihmc.us/temporalAggregates.owl#> .
+@base <http://www.estg.ipvc.pt/mbentoalves/nco.ttl> .
 
 <http://www.estg.ipvc.pt/mbentoalves/nco.ttl> rdf:type owl:Ontology ;
-                                
-owl:imports <http://www.w3.org/2006/time> .
-
+                                               owl:imports <http://www.w3.org/2006/time> .
 
 #################################################################
-#
 #    Object Properties
-#
 #################################################################
 
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#alwaysIntervalDuring
+nco:alwaysIntervalDuring rdf:type owl:ObjectProperty ;
+                         rdfs:domain nco:NCInterval ;
+                         rdfs:range nco:NCInterval .
 
-###  http://www.example.org/nco#ncoBeginning
 
-:ncoBeginning rdf:type owl:ObjectProperty ;
-             
-             rdfs:range :NCOMoment ;
-             
-             rdfs:domain :NCOTemporalEntity .
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#hasBeginning
+nco:hasBeginning rdf:type owl:ObjectProperty ;
+                 rdfs:domain nco:TemporalSequence ;
+                 rdfs:range [ rdf:type owl:Class ;
+                              owl:unionOf ( nco:GeneralDateTimeLimit
+                                            nco:GeneralDateTimeLimitStr
+                                            time:Instant
+                                          )
+                            ] .
 
 
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#hasDuration
+nco:hasDuration rdf:type owl:ObjectProperty ;
+                rdfs:domain nco:TemporalSequence ;
+                rdfs:range [ rdf:type owl:Class ;
+                             owl:unionOf ( nco:DurationTemporalLimit
+                                           time:TemporalDuration
+                                         )
+                           ] .
 
-###  http://www.example.org/nco#ncoEnd
 
-:ncoEnd rdf:type owl:ObjectProperty ;
-       
-       rdfs:range :NCOMoment ;
-       
-       rdfs:domain :NCOTemporalEntity .
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#hasDurationNCI
+nco:hasDurationNCI rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf nco:ncIntervalProp ;
+                   rdfs:range nco:DurationTemporalLimit .
 
 
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#hasEnd
+nco:hasEnd rdf:type owl:ObjectProperty ;
+           rdfs:domain nco:TemporalSequence ;
+           rdfs:range [ rdf:type owl:Class ;
+                        owl:unionOf ( nco:GeneralDateTimeLimit
+                                      nco:GeneralDateTimeLimitStr
+                                      time:Instant
+                                    )
+                      ] .
 
-###  http://www.example.org/nco#ncoHasTemporalEntity
 
-:ncoHasTemporalEntity rdf:type owl:ObjectProperty ;
-                     
-                     rdfs:range :NCOTemporalEntity ;
-                     
-                     rdfs:domain :NCOTemporalEntity .
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#hasLimit
+nco:hasLimit rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf nco:temporalLimitProp .
 
 
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#hasNCInterval
+nco:hasNCInterval rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf nco:ncIntervalProp ;
+                  rdfs:range nco:NCInterval .
 
-###  http://www.example.org/nco#ncoIn
 
-:ncoIn rdf:type owl:ObjectProperty ;
-      
-      rdfs:range :NCOMoment ;
-      
-      rdfs:domain :NCOTemporalEntity .
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#hasSpan
+nco:hasSpan rdf:type owl:ObjectProperty ;
+            rdfs:domain nco:TemporalSequence ;
+            rdfs:range [ rdf:type owl:Class ;
+                         owl:unionOf ( nco:DurationTemporalLimit
+                                       time:TemporalDuration
+                                     )
+                       ] .
 
 
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#hasTRS
+nco:hasTRS rdf:type owl:ObjectProperty .
 
-###  http://www.example.org/nco#ncoSeqOneOf
 
-:ncoSeqOneOf rdf:type owl:ObjectProperty ;
-            
-            rdfs:domain :NCOTemporalEntity ;
-            
-            rdfs:range :NCOListTemporalEntity .
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#intervalAfter
+nco:intervalAfter rdf:type owl:ObjectProperty ;
+                  rdfs:domain nco:NCInterval ;
+                  rdfs:range nco:NCInterval .
 
 
-###  http://www.example.org/nco#nco_intervalAfter
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#intervalBefore
+nco:intervalBefore rdf:type owl:ObjectProperty ;
+                   rdfs:domain nco:NCInterval ;
+                   rdfs:range nco:NCInterval .
 
-:nco_intervalAfter rdf:type owl:ObjectProperty ;
-                  
-                  rdfs:range :NCOTemporalEntity ;
-                  
-                  rdfs:domain :NCOTemporalEntity .
 
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#lowerLimit
+nco:lowerLimit rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf nco:temporalLimitProp .
 
 
-###  http://www.example.org/nco#nco_intervalBefore
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#mostlyIntervalDuring
+nco:mostlyIntervalDuring rdf:type owl:ObjectProperty ;
+                         rdfs:domain nco:NCInterval ;
+                         rdfs:range nco:NCInterval .
 
-:nco_intervalBefore rdf:type owl:ObjectProperty ;
-                   
-                   rdfs:range :NCOTemporalEntity ;
-                   
-                   rdfs:domain :NCOTemporalEntity.
 
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#ncIntervalProp
+nco:ncIntervalProp rdf:type owl:ObjectProperty ;
+                   rdfs:domain nco:NCInterval .
 
 
-###  http://www.example.org/nco#nco_intervalContains
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#oneOfNCIntervalList
+nco:oneOfNCIntervalList rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf nco:ncIntervalProp ;
+                        rdfs:range nco:ListNCInterval .
 
-:nco_intervalContains rdf:type owl:ObjectProperty ;
-                     
-                     rdfs:range :NCOTemporalEntity ;
-                     
-                     rdfs:domain :NCOTemporalEntity.
 
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#temporalLimitProp
+nco:temporalLimitProp rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf nco:ncIntervalProp ;
+                      rdfs:range nco:TemporalLimit .
 
 
-###  http://www.example.org/nco#nco_intervalDuring
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#timeZone
+nco:timeZone rdf:type owl:ObjectProperty ;
+             rdfs:domain nco:GeneralDateTimeLimit ;
+             rdfs:range tzont:TimeZone .
 
-:nco_intervalDuring rdf:type owl:ObjectProperty ;
-                   
-                   rdfs:range :NCOTemporalEntity ;
-                   
-                   rdfs:domain :NCOTemporalEntity.
 
-
-
-###  http://www.example.org/nco#nco_intervalEquals
-
-:nco_intervalEquals rdf:type owl:ObjectProperty ;
-                   
-                   rdfs:range :NCOTemporalEntity ;
-                   
-                   rdfs:domain :NCOTemporalEntity.
-
-
-
-###  http://www.example.org/nco#nco_intervalFinishedBy
-
-:nco_intervalFinishedBy rdf:type owl:ObjectProperty ;
-                       
-                       rdfs:range :NCOTemporalEntity ;
-                       
-                       rdfs:domain :NCOTemporalEntity.
-
-
-
-###  http://www.example.org/nco#nco_intervalFinishes
-
-:nco_intervalFinishes rdf:type owl:ObjectProperty ;
-                     
-                     rdfs:range :NCOTemporalEntity ;
-                     
-                     rdfs:domain :NCOTemporalEntity.
-
-
-
-###  http://www.example.org/nco#nco_intervalMeets
-
-:nco_intervalMeets rdf:type owl:ObjectProperty ;
-                  
-                  rdfs:range :NCOTemporalEntity ;
-                  
-                  rdfs:domain :NCOTemporalEntity.
-
-
-
-###  http://www.example.org/nco#nco_intervalMetBy
-
-:nco_intervalMetBy rdf:type owl:ObjectProperty ;
-                  
-                  rdfs:range :NCOTemporalEntity ;
-                  
-                  rdfs:domain :NCOTemporalEntity.
-
-
-
-###  http://www.example.org/nco#nco_intervalOverlappedBy
-
-:nco_intervalOverlappedBy rdf:type owl:ObjectProperty ;
-                         
-                         rdfs:range :NCOTemporalEntity ;
-                         
-                         rdfs:domain :NCOTemporalEntity.
-
-
-
-###  http://www.example.org/nco#nco_intervalOverlaps
-
-:nco_intervalOverlaps rdf:type owl:ObjectProperty ;
-                     
-                     rdfs:range :NCOTemporalEntity ;
-                     
-                     rdfs:domain :NCOTemporalEntity.
-
-
-
-###  http://www.example.org/nco#nco_intervalStartedBy
-
-:nco_intervalStartedBy rdf:type owl:ObjectProperty ;
-                      
-                      rdfs:range :NCOTemporalEntity ;
-                      
-                      rdfs:domain :NCOTemporalEntity.
-
-
-
-###  http://www.example.org/nco#nco_intervalStarts
-
-:nco_intervalStarts rdf:type owl:ObjectProperty ;
-                   
-                   rdfs:range :NCOTemporalEntity ;
-                   
-                   rdfs:domain :NCOTemporalEntity.
-
-
-###  http://www.example.org/nco#nco_intervalFinishes
-
-:nco_intervalFinishes rdf:type owl:ObjectProperty ;
-                   
-                   rdfs:range :NCOTemporalEntity ;
-                   
-                   rdfs:domain :NCOTemporalEntity.
-
-
-###  http://www.example.org/nco#nco_intervalCloseBefore
-
-:nco_intervalCloseBefore rdf:type owl:ObjectProperty ;
-					
-                   rdfs:subClassOf :nco_intervalBefore
-                   
-                   rdfs:range :NCOTemporalEntity ;
-                   
-                   rdfs:domain :NCOTemporalEntity.
-                   
-                   
-:nco_intervalCloseAfter rdf:type owl:ObjectProperty ;
-                   
-                   rdfs:range :NCOTemporalEntity ;
-                   
-                   rdfs:domain :NCOTemporalEntity.
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#upperLimit
+nco:upperLimit rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf nco:temporalLimitProp .
 
 #################################################################
-#
 #    Data properties
-#
 #################################################################
 
 
-###  http://www.example.org/nco#day_of_week_in_month
-
-:day_of_week_in_month rdf:type owl:DatatypeProperty ;
-                      
-                      rdfs:domain :NCODateTimeMoment ;
-                      
-                      rdfs:range xsd:nonNegativeInteger .
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#day_of_week_in_month
+nco:day_of_week_in_month rdf:type owl:DatatypeProperty ;
+                         rdfs:domain nco:GeneralDateTimeLimit ;
+                         rdfs:range xsd:nonNegativeInteger .
 
 
-
-###  http://www.example.org/nco#ncoInStrDateTimeMoment
-
-:ncoInStrDateTimeMoment rdf:type owl:DatatypeProperty ;
-                        
-                        rdfs:domain :NCOMoment ;
-                        
-                        rdfs:range xsd:string .
-
-
-
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#hasStrGeneralDateTimeLimit
+nco:hasStrGeneralDateTimeLimit rdf:type owl:DatatypeProperty ;
+                               rdfs:domain nco:GeneralDateTimeLimitStr ;
+                               rdfs:range xsd:string .
 
 
 #################################################################
-#
 #    Classes
-#
 #################################################################
 
-
-###  http://www.example.org/nco#NCODateTimeMoment
-
-:NCODateTimeMoment rdf:type owl:Class ;
-                   
-                   rdfs:subClassOf :NCOTemporalEntity ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty time:year ;
-                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                   ] ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty time:month ;
-                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                   ] ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty time:week ;
-                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                   ] ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty time:day ;
-                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                   ] ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty time:dayOfWeek ;
-                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                   ] ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty time:dayOfYear ;
-                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                   ] ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty time:hour ;
-                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                   ] ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty time:minute ;
-                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                   ] ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty time:second ;
-                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                   ] ,
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty time:timeZone ;
-                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                   ],
-                                   [ rdf:type owl:Restriction ;
-                                     owl:onProperty :day_of_week_in_month ;
-                                     owl:maxCardinality "1"^^xsd:nonNegativeInteger
-                                   ] .
+###  http://ontology.ihmc.us/temporalAggregates.owl#TemporalAggregationDescription
+time-entry:TemporalAggregationDescription rdf:type owl:Class ;
+                                          rdfs:subClassOf nco:RecurringInterval .
 
 
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#DateTimeLimit
+nco:DateTimeLimit rdf:type owl:Class ;
+                  rdfs:subClassOf nco:GeneralDateTimeLimit ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty time:day ;
+                                    owl:allValuesFrom xsd:gDay
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty time:month ;
+                                    owl:allValuesFrom xsd:gMonth
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty time:year ;
+                                    owl:allValuesFrom xsd:gYear
+                                  ] .
 
-###  http://www.example.org/nco#NCODateTimeMomentStr
 
-:NCODateTimeMomentStr rdf:type owl:Class ;
-                      
-                      rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                        owl:onProperty :ncoInStrDateTimeMoment ;
-                                        owl:cardinality "1"^^xsd:nonNegativeInteger
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#DurationTemporalLimit
+nco:DurationTemporalLimit rdf:type owl:Class ;
+                          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                            owl:onProperty time:days ;
+                                            owl:allValuesFrom xsd:decimal
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty time:hours ;
+                                            owl:allValuesFrom xsd:decimal
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty time:minutes ;
+                                            owl:allValuesFrom xsd:decimal
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty time:months ;
+                                            owl:allValuesFrom xsd:decimal
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty time:seconds ;
+                                            owl:allValuesFrom xsd:decimal
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty time:weeks ;
+                                            owl:allValuesFrom xsd:decimal
+                                          ] ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty time:years ;
+                                            owl:allValuesFrom xsd:decimal
+                                          ] .
+
+
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#GeneralDateTimeLimit
+nco:GeneralDateTimeLimit rdf:type owl:Class ;
+                         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                           owl:onProperty time:dayOfWeek ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty time:timeZone ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty nco:day_of_week_in_month ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty nco:week_of_month ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty time:day ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty time:dayOfYear ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty time:hour ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty time:minute ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty time:month ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty time:second ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty time:week ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty time:year ;
+                                           owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                                         ] .
+
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#GeneralDateTimeLimitStr
+nco:GeneralDateTimeLimitStr rdf:type owl:Class ;
+                            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                              owl:onProperty nco:hasStrGeneralDateTimeLimit ;
+                                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                                            ] .
+
+
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#ListNCInterval
+nco:ListNCInterval rdf:type owl:Class ;
+                   owl:subClassOf [ rdf:type owl:Restriction ;
+                                         owl:onProperty rdfs:member ;
+                                         owl:allValuesFrom nco:NCInterval
+                                       ] .
+
+
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#NCInterval
+nco:NCInterval rdf:type owl:Class ;
+               rdfs:subClassOf nco:RecurringInterval ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty nco:temporalLimitProp ;
+                                 owl:minCardinality "1"^^xsd:nonNegativeInteger
+                               ] .
+
+
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#RecurringInterval
+nco:RecurringInterval rdf:type owl:Class ;
+                      rdfs:subClassOf nco:TemporalSequence .
+
+
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#TemporalAggregate
+nco:TemporalAggregate rdf:type owl:Class ;
+                      owl:subClassOf [ rdf:type owl:Restriction ;
+                                            owl:onProperty rdfs:member ;
+                                            owl:allValuesFrom [ rdf:type owl:Class ;
+                                                                owl:unionOf ( nco:TemporalAggregate
+                                                                              time:TemporalEntity
+                                                                            )
+                                                              ]
+                                          ] .
+
+
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#TemporalLimit
+nco:TemporalLimit rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Class ;
+                                        owl:unionOf ( nco:GeneralDateTimeLimit
+                                                      nco:GeneralDateTimeLimitStr
+                                                      time:Instant
+                                                    )
                                       ] .
 
 
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#TemporalSequence
+nco:TemporalSequence rdf:type owl:Class ;
+                     rdfs:subClassOf nco:TemporalAggregate .
 
-###  http://www.example.org/nco#NCOMoment
 
-:NCOMoment rdf:type owl:Class ;
-           
-           owl:equivalentClass [ rdf:type owl:Class ;
-                                 owl:unionOf ( :NCODateTimeMoment
-                                               :NCODateTimeMomentStr
-                                               time:Instant
-                                             )
-                               ] .
+###  http://www.w3.org/2002/12/cal/icaltzd#Vevent
+icaltzd:Vevent rdf:type owl:Class ;
+               rdfs:subClassOf nco:RecurringInterval .
 
-:NCOListTemporalEntity 
-	rdfs:subClassOf rdf:List ;
-	rdfs:subClassOf
-		[ a owl:Restriction ;
-            owl:onProperty rdf:first ;
-            owl:allValuesFrom :NCOTemporalEntity 
-        ] ;
-    rdfs:subClassOf    
-        [ a owl:Restriction ;
-            owl:onProperty rdf:rest ;
-            owl:allValuesFrom :NCOListTemporalEntity 
-        ] .
 
-###  http://www.example.org/nco#TemporalRelations
+###  http://www.w3.org/2006/time#DateTimeDescription
+time:DateTimeDescription rdfs:subClassOf nco:DateTimeLimit .
 
-:TemporalRelations rdf:type owl:Class ;
-                   
-                   owl:equivalentClass [ rdf:type owl:Class ;
-                                         owl:oneOf ( time:hasEnd
-                                                     :ncoEnd
-                                                     :ncoSeqOneOf
-                                                     time:hasBeginning
-                                                     :ncoBeginning
-                                                     :ncoIn
-                                                   )
-                                       ] .
-                                       
-time:TemporalEntity rdfs:subClassOf :NCOTemporalEntity .
+
+###  http://www.w3.org/2006/time#GeneralDateTimeDescription
+time:GeneralDateTimeDescription rdfs:subClassOf nco:GeneralDateTimeLimit .
+
+
+###  http://www.w3.org/2006/time#GeneralDurationDescription
+time:GeneralDurationDescription rdfs:subClassOf nco:DurationTemporalLimit .
+
+
+###  Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi

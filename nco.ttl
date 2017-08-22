@@ -141,9 +141,13 @@ nco:upperLimit rdf:type owl:ObjectProperty ;
 #    Data properties
 #################################################################
 
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#weekOfMonth
+nco:weekOfMonth rdf:type owl:DatatypeProperty ;
+                         rdfs:domain nco:GeneralDateTimeLimit ;
+                         rdfs:range xsd:nonNegativeInteger .
 
-###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#day_of_week_in_month
-nco:day_of_week_in_month rdf:type owl:DatatypeProperty ;
+###  http://www.estg.ipvc.pt/mbentoalves/nco.ttl#dayOfWeekInMonth
+nco:dayOfWeekInMonth rdf:type owl:DatatypeProperty ;
                          rdfs:domain nco:GeneralDateTimeLimit ;
                          rdfs:range xsd:nonNegativeInteger .
 
@@ -184,31 +188,31 @@ nco:DateTimeLimit rdf:type owl:Class ;
 nco:DurationTemporalLimit rdf:type owl:Class ;
                           rdfs:subClassOf [ rdf:type owl:Restriction ;
                                             owl:onProperty time:days ;
-                                            owl:allValuesFrom xsd:decimal
+                                            owl:allValuesFrom xsd:nonNegativeInteger
                                           ] ,
                                           [ rdf:type owl:Restriction ;
                                             owl:onProperty time:hours ;
-                                            owl:allValuesFrom xsd:decimal
+                                            owl:allValuesFrom xsd:nonNegativeInteger
                                           ] ,
                                           [ rdf:type owl:Restriction ;
                                             owl:onProperty time:minutes ;
-                                            owl:allValuesFrom xsd:decimal
+                                            owl:allValuesFrom xsd:nonNegativeInteger
                                           ] ,
                                           [ rdf:type owl:Restriction ;
                                             owl:onProperty time:months ;
-                                            owl:allValuesFrom xsd:decimal
+                                            owl:allValuesFrom xsd:nonNegativeInteger
                                           ] ,
                                           [ rdf:type owl:Restriction ;
                                             owl:onProperty time:seconds ;
-                                            owl:allValuesFrom xsd:decimal
+                                            owl:allValuesFrom xsd:nonNegativeInteger
                                           ] ,
                                           [ rdf:type owl:Restriction ;
                                             owl:onProperty time:weeks ;
-                                            owl:allValuesFrom xsd:decimal
+                                            owl:allValuesFrom xsd:nonNegativeInteger
                                           ] ,
                                           [ rdf:type owl:Restriction ;
                                             owl:onProperty time:years ;
-                                            owl:allValuesFrom xsd:decimal
+                                            owl:allValuesFrom xsd:nonNegativeInteger
                                           ] .
 
 
@@ -223,11 +227,11 @@ nco:GeneralDateTimeLimit rdf:type owl:Class ;
                                            owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                          ] ,
                                          [ rdf:type owl:Restriction ;
-                                           owl:onProperty nco:day_of_week_in_month ;
+                                           owl:onProperty nco:dayOfWeekInMonth ;
                                            owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                          ] ,
                                          [ rdf:type owl:Restriction ;
-                                           owl:onProperty nco:week_of_month ;
+                                           owl:onProperty nco:weekOfMonth ;
                                            owl:maxCardinality "1"^^xsd:nonNegativeInteger
                                          ] ,
                                          [ rdf:type owl:Restriction ;
